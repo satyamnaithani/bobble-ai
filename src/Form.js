@@ -1,31 +1,26 @@
 import React from 'react';
-//import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-
-//import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
-// import Divider from '@material-ui/core/Divider'
-
-
+import { useState } from 'react';
+import { CircularProgress, Dialog } from '@material-ui/core';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    //marginTop: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
+    padding: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -34,18 +29,53 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fName, setFName] = useState("");
+  const [lName, setlName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [loggedData, setLoggedData] = useState("");
+  const [loggedInSuccess, setLoggedInSuccess] = useState(false)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            email: email,
+            password: password
+        })
+    };
+    fetch('https://reqres.in/api/register', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            setIsLoading(false)
+            setLoggedData(data)
+            setLoggedInSuccess(true)
+        })
+        .catch(err=> {
+            setIsLoading(false);
+            alert(err);
+        })
+  }
+  const handleClose = () => {
+      setLoggedInSuccess(false)
+  }
   return (      
       <div className={classes.paper}>
-        <form className={classes.form}>
-          <Grid container spacing={2}>
+        <form className={classes.form} onSubmit={handleSubmit} ValidateUser>
+          <Grid container spacing={1}>
             <Grid item xs={12} sm={12}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
                 required
+                value={fName}
+                onChange={(e)=>setFName(e.target.value)}
                 fullWidth
+                margin="normal"
                 id="firstName"
                 label="First Name"
                 autoFocus
@@ -56,6 +86,8 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                value={lName}
+                onChange={(e)=>setlName(e.target.value)}
                 id="lastName"
                 label="Last Name"
                 name="lastName"
@@ -67,6 +99,8 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -80,6 +114,8 @@ export default function SignUp() {
                 fullWidth
                 name="password"
                 label="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -96,9 +132,26 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            {isLoading?<CircularProgress color="inherit"/>: 'Sign Up'}
           </Button>
         </form>
+        <Dialog
+        maxWidth={"lg"}
+        open={loggedInSuccess}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+          <DialogTitle id="form-dialog-title">Reqres Api</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+           Api used : https://reqres.in/
+           Note: Use email= "eve.holt@reqres.in" and password = "pistol" as per API Docs
+          </DialogContentText>
+          id = {loggedData.id}
+          token = {loggedData.token}
+        </DialogContent>
+          </Dialog>
       </div>
   );
 }
