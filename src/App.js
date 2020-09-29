@@ -7,12 +7,16 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { AppBar, Toolbar,Paper } from "@material-ui/core"
+
+// Initializing the firebase app on react app
 firebase.initializeApp({
   apiKey: "AIzaSyC7DTPRmx9O_Hy1KyBsYEPrfSMOY5aFB0k",
   authDomain: "fir-oauth-f7382.firebaseapp.com"
 })
+
+
 class App extends Component {
-  state = { isSignedIn: false }
+  state = { isSignedIn: false } // assingning state of signed in false
   uiConfig = {
     signInFlow: "popup",
     signInOptions: [
@@ -23,7 +27,7 @@ class App extends Component {
       signInSuccess: () => false
     }
   }
-
+ // As soon as the component gets mount on the app it performs AJAX request. 
   componentDidMount = () => {
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user })
@@ -39,6 +43,7 @@ class App extends Component {
             <Typography variant="h6" alignCenter>Bobble AI</Typography>
           </Toolbar>
         </AppBar>
+        {/* There is a ternary operator used here that will show the details of the user if he/she is signed in using OAuth else it will ask to sign in */}
         {this.state.isSignedIn ? (
           <span>
             <div>Signed In!</div>
