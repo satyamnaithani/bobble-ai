@@ -58,7 +58,7 @@ class App extends Component {
           <div>
             <br/><br/>
           <Container component="main" maxWidth="xs">
-            <Paper elevation={2} style={{width: '150%'}}>
+            <Paper elevation={2}>
               <br/>
           <CssBaseline />
           <Typography component="p" variant="p">

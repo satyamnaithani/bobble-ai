@@ -47,12 +47,12 @@ export default function SignUp() {
             password: password
         })
     };
-    fetch('https://reqres.in/api/register', requestOptions)
+    fetch('https://reqres.in/api/register', requestOptions) // Sending a post request to register the user on reqres.in
         .then(response => response.json())
         .then(data => {
-            setIsLoading(false)
-            setLoggedData(data)
-            setLoggedInSuccess(true)
+            setIsLoading(false)    // setting loading= false
+            setLoggedData(data)     // adding fetched data to loggedData
+            setLoggedInSuccess(true)  
         })
         .catch(err=> {
             setIsLoading(false);
@@ -60,7 +60,7 @@ export default function SignUp() {
         })
   }
   const handleClose = () => {
-      setLoggedInSuccess(false)
+      setLoggedInSuccess(false)  // for closing the dialog box
   }
   return (      
       <div className={classes.paper}>
@@ -132,7 +132,8 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
           >
-            {isLoading?<CircularProgress color="inherit"/>: 'Sign Up'}
+              {/* Ternary operator used for showing loading while fetching the data */}
+            {isLoading?<CircularProgress color="inherit"/>: 'Sign Up'}  
           </Button>
         </form>
         <Dialog
