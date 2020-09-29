@@ -1,4 +1,34 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project can be accessed live through : https://bobble-ai-frontend.herokuapp.com/
+## Procedures followed to complete the project were as follows: 
+
+## 1. 
+Set up npx creat-react-app boiler plate 
+## 2.
+Install npm modules - material-ui, firebase, react-firebaseui
+## 3.
+Made a github repository.
+Set up envirnment to deploy it on heroku.
+Installed npm module named "serve" for deploying application on cloud.
+Linked the github repository to the heroku cloud.
+## 4.
+Made a new app on firebase console.
+configured facebook and google OAuth.
+Validated OAuth Redirect URIs of firebase on https://developers.facebook.com/ for facebook. 
+## 5.
+Now edited the App.js file of the react app.
+Linked the firebase Oauth to the react app by entering the apikey and auth domain of firebase app.
+## 6.
+Created a dynamic form using functional component and useState logic.
+Connected the https://reqres.in/api/register POST api to the form validation.
+## 7.
+Displayed the content of recieved by the api and displayed it on the Dialog.
+## 8.
+Displayed the data retrived after the successfull OAuth of Facebook/Google on the page. 
+It will display the Profile picture and UserName of the Google/Facebook verified page.
+Also teher is is button to logout the session.
+## 9.
+Pushed the work on the github repository which automatically deploys the entire applicatiopn on heroku linked cloud.
+
 
 ## Available Scripts
 
